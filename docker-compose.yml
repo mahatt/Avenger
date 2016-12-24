@@ -1,7 +1,17 @@
 version: "2.0"
 services:
+
+#  THis is HA proxy for setup
+#  TODO:  Changes ip rule for HA across machiens
     proxy:
         image: nginx:1.10.2
         ports:
             - "80:80"
             - "443:443"
+
+# THis is fpm server  for php application
+# TODO:  setup multiple sites using configuration			
+    php:
+       image: php:7.0-fpm
+       expose:
+            - "9000"
