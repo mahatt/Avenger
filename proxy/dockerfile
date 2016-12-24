@@ -1,0 +1,7 @@
+FROM nginx:1.10.2
+
+MAINTAINER Mahesh Attarde<mahesh@shoppitron.com>
+ADD nginx.conf /etc/nginx/
+COPY sites-available/*.conf /etc/nginx/sites-available
+CMD ["nginx"]
+EXPOSE 80 443
