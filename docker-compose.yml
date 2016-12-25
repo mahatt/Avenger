@@ -1,24 +1,42 @@
-version: "2.0"
+version: '2'
 services:
+
+## This is space to create setup workspace
+
+    
 
 #  THis is HA proxy for setup
 #  TODO:  Changes ip rule for HA across machines
     proxy:
-        build: ./proxy
+        build: 
+             context: ./proxy
+             args: 
+                - PHP_UPSTREAM=php-fpm  
         ports:
             - "80:80"
             - "443:443"
+        volumes_from:
+            - cuckoo_php
+        volumes:
+            - ./cuckoo/content/log/nginx/:/var/log/nginx
+        links:
+            - "php-fpm"
 
 # THis is fpm server  for php application
 # TODO:  setup multiple sites using configuration			
-    php:
-       image: php:7.0-fpm
+    php-fpm:
+       build: ./php
        expose:
             - "9000"
+       volumes_from:
+            - cuckoo_php
 
 ## Add configuration files volume			
     cuckoo_proxy:
         image: tianon/true
-
+        volumes:
+             - ./cuckoo/content/src:/var/www/shoppitron
     cuckoo_php:
         image: tianon/true
+        volumes:
+             - ./cuckoo/content/src:/var/www/shoppitron

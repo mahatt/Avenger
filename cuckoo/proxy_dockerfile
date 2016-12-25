@@ -1,0 +1,3 @@
+FROM tianon/true
+MAINTAINER Mahesh Attarde<mahesh@shoppitron.com>
+COPY ./content/src /var/www/shoppitron
